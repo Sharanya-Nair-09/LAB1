@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marksheet</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 12px;
+        }
+        thead {
+            background-color: #385623;
+            color: #ffffff
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .green{
+            color: #385623;
+            font-weight: bold;
+        }
+
+        body{
+            display : flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content:center;
+            min-height: 100vh;
+            margin:0;
+        }
+
+        .heading{
+            letter-spacing: 15px;
+            color:#385623
+        }
+
+        .boldt{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="heading">STUDENT MARKSHEET</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ROLL NO</th>
+                <th>NAME</th>
+                <th>SUBJECT 1</th>
+                <th>SUBJECT 2</th>
+                <th>SUBJECT 3</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="green">101</td>
+                <td class="boldt">Amit Sharma</td>
+                <td>85</td>
+                <td>90</td>
+                <td>88</td>
+                <td class="boldt">263</td>
+            </tr>
+            <tr>
+                <td class="green">102</td>
+                <td class="boldt">Priya Singh</td>
+                <td>78</td>
+                <td>82</td>
+                <td>91</td>
+                <td class="boldt">251</td>
+            </tr>
+            <tr>
+                <td class="green">103</td>
+                <td class="boldt">Rahul Verma</td>
+                <td>92</td>
+                <td>88</td>
+                <td>84</td>
+                <td class="boldt">264</td>
+            </tr>
+            <tr>
+                <td class="green">104</td>
+                <td class="boldt">Sneha Kapur</td>
+                <td>70</td>
+                <td>75</td>
+                <td>80</td>
+                <td class="boldt">225</td>
+            </tr>
+            <tr>
+                <td class="green">105</td>
+                <td class="boldt">Vikram Jha</td>
+                <td>88</td>
+                <td>91</td>
+                <td>89</td>
+                <td class="boldt">268</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

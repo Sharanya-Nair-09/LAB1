@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        form{
+            max-width: 400px;
+            margin: 20px auto;
+            font-family: sans-serif;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            font-weight: bold;
+        }
+
+        input, textarea{
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border:1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button{
+            display:block;
+            margin: 10px auto;
+            width: 60%;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: blueviolet;
+            color:white;
+            border: none;
+            border-radius: 8px;
+            cursor:pointer;
+            transition:transform 0.2s;
+        }
+
+        button:hover{
+            background-color: purple;
+            transform: scale(1.05);
+        }
+
+        body{
+            display : flex;
+            flex-direction: column;
+            align-items:center;
+            justify-content:center;
+            min-height: 100vh;
+            margin:0;
+            background-color: black;
+        }
+        .heading{
+            letter-spacing: 15px;
+            color: white;
+            font-size:300%;
+        }
+
+        #contactform{
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1 class="heading">CONTACT US</h1>
+
+    <form action="/submit-form" method="POST" id="contactform">
+        <label for="name"> NAME : </label>
+        <input type="text" id="name" name="user_name" placeholder="Full Name" required>
+
+        <label for="email"> EMAIL : </label>
+        <input type="email" id="email" name="user_email" placeholder="email@example.com" required>
+
+        <label for="message"> MESSAGE : </label>
+        <textarea id="message" name="user_message" rows="5" placeholder="How can we help?" required></textarea>
+
+        <button type="submit"> SUBMIT </button>
+    </form>
+</body>
+
+<script>
+    const form = document.getElementById('contactform');
+    form.addEventListener('submit' , function(event){
+        event.preventDefault();
+        alert("Form Submitted Successfully !");
+        form.reset();
+    });
+</script>
+</html>
