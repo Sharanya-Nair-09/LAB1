@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management System</title>
+    <style>
+        :root {
+            --primary: #2383e2;
+            --danger: #eb5757;
+            --bg-gradient: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            --text-dark: #000000;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            padding: 60px 40px; 
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        h2 { 
+            text-align: center; 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 50px;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+        }
+
+        .container { 
+            max-width: 1400px; 
+            margin: auto; 
+            display: flex; 
+            gap: 40px; 
+            align-items: flex-start;
+        }
+        
+        .form-box, .table-box { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);
+            padding: 45px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .form-box { flex: 1; min-width: 400px; }
+        .table-box { flex: 1.5; min-height: 600px; }
+
+        .box-title { 
+            font-size: 1.6rem; 
+            font-weight: 800; 
+            margin-bottom: 30px; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 15px;
+            text-align: center;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        input { 
+            width: 100%; 
+            padding: 16px; 
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            border-radius: 12px; 
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-reg { 
+            background: var(--primary); 
+            color: white; 
+            width: 100%; 
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(35, 131, 226, 0.2);
+        }
+
+        .btn-clear { 
+            background: transparent; 
+            color: var(--danger); 
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: 1.5px solid var(--danger);
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        /* FIXED: Removed the 3px bold black border */
+        th { 
+            text-align: center; 
+            padding: 20px; 
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15); /* Thin, elegant line */
+            color: #000; 
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td { 
+            padding: 22px 15px; 
+            text-align: center; 
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .btn-del { 
+            background: #fff; 
+            color: var(--danger); 
+            border: 1.5px solid var(--danger); 
+            padding: 8px 16px; 
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>User Management Studio</h2>
+
+    <div class="container">
+        <div class="form-box">
+            <div class="box-title">Account Setup</div>
+            <form id="regForm">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="number" id="mobile" placeholder="Mobile Number" required>
+                <input type="password" id="pass" placeholder="Create Password" required>
+                <button type="submit" class="btn-reg">Register User</button>
+            </form>
+            <button onclick="clearAll()" class="btn-clear">Clear All Records</button>
+        </div>
+
+        <div class="table-box">
+            <div class="box-title">Active Database</div>
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const regForm = document.getElementById('regForm');
+        const tableBody = document.getElementById('tableBody');
+
+        function displayUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            tableBody.innerHTML = "";
+            users.forEach((user, index) => {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td style="color: #000; font-weight: 700;">${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.mobile}</td>
+                        <td><button class="btn-del" onclick="deleteUser(${index})">Delete</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            const pass = document.getElementById('pass').value;
+
+            if(mobile.length !== 10) return alert("Mobile must be 10 digits");
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push({ name, email, mobile, pass });
+            localStorage.setItem('users', JSON.stringify(users));
+            regForm.reset();
+            displayUsers();
+        });
+
+        function deleteUser(index) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayUsers();
+        }
+
+        function clearAll() {
+            if(confirm("Delete all records?")) { localStorage.clear(); displayUsers(); }
+        }
+
+        displayUsers();
+    </script>
+</body>
+</html>
